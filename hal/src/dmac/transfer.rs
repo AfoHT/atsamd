@@ -753,3 +753,28 @@ where
         }
     }
 }
+
+#[cfg(feature = "async")]
+use core::{
+    future::Future,
+    pin::Pin,
+    task::{Context, Poll},
+};
+
+#[cfg(feature = "async")]
+impl<S, D, C, P, W> Future for Transfer<C, BufferPair<S, D>, P, W>
+where
+    S: Buffer,
+    D: Buffer<Beat = S::Beat>,
+    C: AnyChannel<Status = Busy>,
+{
+    type Output = ();
+
+    fn poll(self: Pin<&mut Self>, _cx: &mut Context<'_>) -> Poll<Self::Output> {
+        if self.complete {
+            Poll::Ready(())
+        } else {
+            Poll::Pending
+        }
+    }
+}

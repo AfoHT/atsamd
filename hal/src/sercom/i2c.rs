@@ -26,12 +26,12 @@
 //! aliases for [`Pad`] types.
 //!
 //! ```
-//! use atsamd_hal::gpio::v2::{PA08, PA09, AlternateC};
-//! use atsamd_hal::sercom::v2::{Sercom0, i2c};
+//! use atsamd_hal::gpio::{PA08, PA09, AlternateC};
+//! use atsamd_hal::sercom::{Sercom0, i2c};
 //! use atsamd_hal::typelevel::NoneT;
 //!
 //! // SAMx5x-specific imports
-//! use atsamd_hal::sercom::v2::pad::IoSet1;
+//! use atsamd_hal::sercom::pad::IoSet1;
 //!
 //! type Sda = Pin<PA08, AlternateC>;
 //! type Scl = Pin<PA09, AlternateC>;
@@ -49,8 +49,8 @@ Alternatively, you can use the `PadsFromIds` alias to define a set of
 don't have [`Pin`] aliases pre-defined.
 
 ```
-use atsamd_hal::gpio::v2::{PA08, PA09};
-use atsamd_hal::sercom::v2::{Sercom0, i2c};
+use atsamd_hal::gpio::{PA08, PA09};
+use atsamd_hal::sercom::{Sercom0, i2c};
 
 type Pads = i2c::PadsFromIds<Sercom0, PA08, PA09>;
 ```
@@ -58,8 +58,7 @@ type Pads = i2c::PadsFromIds<Sercom0, PA08, PA09>;
 "
 )]
 //!
-//! Instances of [`Pads`] are created using the [`new`](Pads::new) method. Both
-//! [`v1::Pin`] and [`v2::Pin`] types are accepted here.
+//! Instances of [`Pads`] are created using the [`new`](Pads::new) method.
 //!
 //! On SAMD21 and SAMx5x chips, [`new`](Pads::new) method automatically convert
 //! each pin to the correct [`PinMode`]. But for SAMD11 chips, users must
@@ -70,8 +69,8 @@ type Pads = i2c::PadsFromIds<Sercom0, PA08, PA09>;
 //!
 //! ```
 //! use atsamd_hal::pac::Peripherals;
-//! use atsamd_hal::gpio::v2::Pins;
-//! use atsamd_hal::sercom::v2::{Sercom0, i2c};
+//! use atsamd_hal::gpio::Pins;
+//! use atsamd_hal::sercom::{Sercom0, i2c};
 //!
 //! let mut peripherals = Peripherals::take().unwrap();
 //! let pins = Pins::new(peripherals.PORT);
@@ -90,8 +89,8 @@ type Pads = i2c::PadsFromIds<Sercom0, PA08, PA09>;
 //! configuration. Users are responsible for correctly configuring the GCLK.
 //!
 //! ```
-//! use atsamd_hal::gpio::v2::{PA08, PA09};
-//! use atsamd_hal::sercom::v2::{Sercom0, i2c};
+//! use atsamd_hal::gpio::{PA08, PA09};
+//! use atsamd_hal::sercom::{Sercom0, i2c};
 //!
 //! type Pads = i2c::PadsFromIds<Sercom0, PA08, PA09>;
 //! type Config = i2c::Config<Pads>;
@@ -168,7 +167,7 @@ type Pads = i2c::PadsFromIds<Sercom0, PA08, PA09>;
 //! then use the `set_*` methods.
 //!
 //! ```
-//! use atsamd_hal::sercom::v2::i2c::I2c;
+//! use atsamd_hal::sercom::i2c::I2c;
 //! use atsamd_hal::time::*;
 //!
 //! // Assume config is a valid Duplex I2C Config struct
@@ -196,17 +195,15 @@ type Pads = i2c::PadsFromIds<Sercom0, PA08, PA09>;
 //! [`disable`]: I2c::disable
 //! [`reconfigure`]: I2c::reconfigure
 //! [`bsp_pins`]: crate::bsp_pins
-//! [`Sercom`]: crate::sercom::v2::Sercom
-//! [`Pad0`]: crate::sercom::v2::pad::Pad0
-//! [`Pad1`]: crate::sercom::v2::pad::Pad1
-//! [`Pad`]: crate::sercom::v2::pad::Pad
-//! [`IsPad`]: crate::sercom::v2::pad::IsPad
-//! [`PadNum`]: crate::sercom::v2::pad::PadNum
-//! [`v1::Pin`]: crate::gpio::v1::Pin
-//! [`v2::Pin`]: crate::gpio::v2::pin::Pin
-//! [`Pin`]: crate::gpio::v2::pin::Pin
-//! [`PinId`]: crate::gpio::v2::pin::PinId
-//! [`PinMode`]: crate::gpio::v2::pin::PinMode
+//! [`Sercom`]: crate::sercom::Sercom
+//! [`Pad0`]: crate::sercom::pad::Pad0
+//! [`Pad1`]: crate::sercom::pad::Pad1
+//! [`Pad`]: crate::sercom::pad::Pad
+//! [`IsPad`]: crate::sercom::pad::IsPad
+//! [`PadNum`]: crate::sercom::pad::PadNum
+//! [`Pin`]: crate::gpio::pin::Pin
+//! [`PinId`]: crate::gpio::pin::PinId
+//! [`PinMode`]: crate::gpio::pin::PinMode
 //! [`i2c::Write`]: embedded_hal::blocking::i2c::Write
 //! [`i2c::Read`]: embedded_hal::blocking::i2c::Read
 //! [`i2c::WriteRead`]: embedded_hal::blocking::i2c::WriteRead
@@ -396,7 +393,7 @@ impl<C: AnyConfig> I2c<C> {
     /// transactions.
     ///
     /// ```
-    /// use atsamd_hal::sercom::v2::i2c::I2c;
+    /// use atsamd_hal::sercom::i2c::I2c;
     /// i2c.reconfigure(|c| c.set_run_in_standby(false));
     /// ```
     #[inline]
